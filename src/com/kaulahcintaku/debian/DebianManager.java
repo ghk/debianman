@@ -22,14 +22,11 @@ import android.widget.ListView;
 
 public class DebianManager extends Activity {
 	
-	private static String MOUNTED_KIT_LOCATION = "/mnt/external/debian";
-	private static String UNMOUNTED_KIT_LOCATION = "/mnt/sdcard/external_sd/debian";
+	private static String KIT_LOCATION = "/mnt/sdcard/external_sd/debian";
 	
 	private static String MOUNT_COMMAND = "/system/bin/debian -m"; 
-	private static String UMOUNT_COMMAND;
-	static{
-		UMOUNT_COMMAND = Command.debianRootCommand("sh "+MOUNTED_KIT_LOCATION+"/stop.sh");
-	}
+	private static String UMOUNT_COMMAND = "/system/bin/debian -um"; 
+
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +46,7 @@ public class DebianManager extends Activity {
 			}
 		});
         
-        final List<String> initdScripts = readAllLines(UNMOUNTED_KIT_LOCATION+"/initd.txt");
+        final List<String> initdScripts = readAllLines(KIT_LOCATION+"/initd.txt");
         ArrayAdapter<String> initdAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, initdScripts);
         ListView initdView = (ListView)findViewById(R.id.initd_entry);
         initdView.setAdapter(initdAdapter);
@@ -62,7 +59,7 @@ public class DebianManager extends Activity {
 		});
         configureHeight(initdView, initdAdapter);
         
-        List<String> scriptConfigs = readAllLines(UNMOUNTED_KIT_LOCATION+"/scripts.txt");
+        List<String> scriptConfigs = readAllLines(KIT_LOCATION+"/scripts.txt");
         final List<Command> commands = new ArrayList<Command>();
         for(String config: scriptConfigs)
         	commands.add(new Command(config));

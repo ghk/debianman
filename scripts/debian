@@ -1,0 +1,21 @@
+#!/system/bin/sh
+
+echo $*
+
+. /mnt/sdcard/external_sd/debian/var.sh
+if [ $# -eq 0 ]; then
+	su -c "chroot $mnt su root"
+elif [ $1 = "-u" ]; then
+	shift
+    if [ $# -eq 0 ]; then
+        su -c "chroot $mnt su $username"
+    else
+        su -c "chroot $mnt su $username -c \"$*\""
+    fi
+elif [ $1 = "-m" ]; then
+	su -c "cd $kit && sh start.sh"
+elif [ $1 = "-um" ]; then
+	su -c "cd $kit && sh stop.sh"
+else
+	su -c "chroot $mnt su root -c \"$*\""
+fi

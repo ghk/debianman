@@ -1,0 +1,3 @@
+Start X#/home/egoz/misc/bin/startvnc#false
+Stop X#/home/egoz/misc/bin/stopvnc#false
+SIMA Etc Host Configurer#/root/misc/bin/sehc#true
